@@ -19,8 +19,8 @@ export function Header() {
     <header className="bg-[#ff4081] text-white sticky top-0 z-50 w-full">
       <div className="flex h-16 items-center justify-between pl-0 pr-4">
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" className="text-white ml-0 rounded-none h-16" onClick={toggleSidebar}>
-            <Menu className="h-7 w-7" />
+          <Button variant="ghost" size="icon" className="text-white ml-0 rounded-none h-16 w-16" onClick={toggleSidebar}>
+            <Menu className="h-10 w-10" />
           </Button>
           <Link href="/" className="flex items-center">
             <span className="text-2xl font-bold">SocFlow</span>

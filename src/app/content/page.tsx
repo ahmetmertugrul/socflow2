@@ -17,28 +17,28 @@ export default function ContentPage() {
       <div className="container py-6">
         <div className="flex flex-col space-y-6">
           <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-bold tracking-tight">Content Library</h1>
-            <Button asChild>
+            <h1 className="text-2xl font-semibold">Content Library</h1>
+            <Button className="rounded-full bg-primary hover:bg-primary/90">
               <Link href="/content/create">Create Content</Link>
             </Button>
           </div>
           
           <div className="flex items-center justify-between">
             <Tabs defaultValue="all" className="w-auto">
-              <TabsList>
-                <TabsTrigger value="all">All</TabsTrigger>
-                <TabsTrigger value="published">Published</TabsTrigger>
-                <TabsTrigger value="scheduled">Scheduled</TabsTrigger>
-                <TabsTrigger value="drafts">Drafts</TabsTrigger>
+              <TabsList className="bg-muted/50">
+                <TabsTrigger value="all" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">All</TabsTrigger>
+                <TabsTrigger value="published" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Published</TabsTrigger>
+                <TabsTrigger value="scheduled" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Scheduled</TabsTrigger>
+                <TabsTrigger value="drafts" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Drafts</TabsTrigger>
               </TabsList>
             </Tabs>
             
             <div className="flex items-center gap-2">
               <Input 
                 placeholder="Search content..." 
-                className="w-[250px]"
+                className="w-[250px] rounded-full border-muted/50 focus-visible:ring-primary"
               />
-              <Button variant="outline" size="icon">
+              <Button variant="outline" size="icon" className="rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
                   <path d="M3 6h18" />
                   <path d="M7 12h10" />

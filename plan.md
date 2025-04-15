@@ -23,17 +23,6 @@
 - [x] Git reposunun oluşturulması ve ilk commit'in yapılması
 
 ## 2. Temel UI Geliştirme
-- [x] Tasarım sistemi ve stil rehberi oluşturulması
-  - [x] Renk paleti belirlenmesi
-  - [x] Tipografi seçimi
-  - [x] Boşluk ve grid sistemi
-  - [x] Animasyon ve geçiş standardı
-- [x] Temel layout bileşenlerinin oluşturulması
-  - [x] Navbar/Header bileşeni
-  - [x] Sidebar/Navigation bileşeni
-  - [x] Footer bileşeni
-  - [x] Container ve grid bileşenleri
-- [ ] Ana sayfanın tasarlanması
   - [ ] Hero bölümü
   - [ ] Özellikler bölümü
   - [ ] İstatistikler bölümü

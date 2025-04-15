@@ -181,7 +181,7 @@ export function Sidebar({ className }: SidebarProps) {
           </div>
           
           {/* Toggle Button */}
-          <div className="p-4 flex justify-center mt-auto mb-8">
+          <div className="p-4 flex justify-center mt-auto mb-4">
             <button 
               onClick={toggleSidebar}
               className="h-8 w-8 rounded-full bg-transparent hover:bg-white/20 flex items-center justify-center transition-colors cursor-pointer"
@@ -193,7 +193,7 @@ export function Sidebar({ className }: SidebarProps) {
       )}
 
       {collapsed && (
-        <div className="p-4 flex justify-center mt-auto mb-4">
+        <div className="p-4 flex justify-center mt-auto -mb-2">
           <button 
             onClick={toggleSidebar}
             className="h-8 w-8 rounded-full bg-transparent hover:bg-white/20 flex items-center justify-center transition-colors cursor-pointer"

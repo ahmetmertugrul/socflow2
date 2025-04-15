@@ -27,7 +27,7 @@ export function Sidebar({ className }: SidebarProps) {
     { name: 'Threads', color: 'bg-black', icon: 'TH' },
     { name: 'TikTok', color: 'bg-black', icon: 'TT' },
     { name: 'Tumblr', color: 'bg-blue-900', icon: 'T' },
-    { name: 'X/Twitter', color: 'bg-blue-400', icon: 'X' },
+    { name: 'X', color: 'bg-blue-400', icon: 'X' },
     { name: 'YouTube', color: 'bg-red-600', icon: 'YT' },
   ]
 
@@ -50,7 +50,7 @@ export function Sidebar({ className }: SidebarProps) {
 
   return (
     <aside className={cn(
-      'flex flex-col h-screen bg-gradient-to-b from-[#ff4081] to-[#9c27b0] text-white transition-all duration-300',
+      'flex flex-col h-full bg-gradient-to-b from-[#1e3a8a] to-[#0f172a] text-white transition-all duration-300',
       collapsed ? 'w-16' : 'w-64',
       className
     )}>
@@ -61,39 +61,39 @@ export function Sidebar({ className }: SidebarProps) {
           <Link href="/content/create">
             <button className="w-full flex items-center justify-center gap-2 bg-white/20 hover:bg-white/30 text-white font-medium rounded-full py-3 px-4 transition-colors">
               <Plus className="h-5 w-5" />
-              Yeni İçerik Oluştur
+              Create Post
             </button>
           </Link>
         </div>
       ) : (
-        <div className="flex flex-col items-center gap-6 mt-20">
+        <div className="flex flex-col items-center gap-6 mt-10">
           <Link href="/content/create">
-            <button className="w-10 h-10 flex items-center justify-center bg-white/20 hover:bg-white/30 text-white rounded-md transition-colors">
+            <button className="w-10 h-10 flex items-center justify-center bg-transparent hover:bg-white/20 text-white rounded-md transition-colors cursor-pointer">
               <Plus className="h-5 w-5" />
             </button>
           </Link>
           <Link href="/dashboard">
-            <button className="w-10 h-10 flex items-center justify-center bg-white/20 hover:bg-white/30 text-white rounded-md transition-colors">
+            <button className="w-10 h-10 flex items-center justify-center bg-transparent hover:bg-white/20 text-white rounded-md transition-colors cursor-pointer">
               <Home className="h-5 w-5" />
             </button>
           </Link>
           <Link href="/calendar">
-            <button className="w-10 h-10 flex items-center justify-center bg-white/20 hover:bg-white/30 text-white rounded-md transition-colors">
+            <button className="w-10 h-10 flex items-center justify-center bg-transparent hover:bg-white/20 text-white rounded-md transition-colors cursor-pointer">
               <CalendarIcon className="h-5 w-5" />
             </button>
           </Link>
           <Link href="/analytics">
-            <button className="w-10 h-10 flex items-center justify-center bg-white/20 hover:bg-white/30 text-white rounded-md transition-colors">
+            <button className="w-10 h-10 flex items-center justify-center bg-transparent hover:bg-white/20 text-white rounded-md transition-colors cursor-pointer">
               <BarChart2 className="h-5 w-5" />
             </button>
           </Link>
           <Link href="/audience">
-            <button className="w-10 h-10 flex items-center justify-center bg-white/20 hover:bg-white/30 text-white rounded-md transition-colors">
+            <button className="w-10 h-10 flex items-center justify-center bg-transparent hover:bg-white/20 text-white rounded-md transition-colors cursor-pointer">
               <Users className="h-5 w-5" />
             </button>
           </Link>
           <Link href="/content">
-            <button className="w-10 h-10 flex items-center justify-center bg-white/20 hover:bg-white/30 text-white rounded-md transition-colors">
+            <button className="w-10 h-10 flex items-center justify-center bg-transparent hover:bg-white/20 text-white rounded-md transition-colors cursor-pointer">
               <FileText className="h-5 w-5" />
             </button>
           </Link>
@@ -134,9 +134,9 @@ export function Sidebar({ className }: SidebarProps) {
 
       {!collapsed && (
         <>
-          <div className="px-4 py-3">
-            <div className="text-sm font-medium mb-2 text-white/90">April 2025</div>
-            <div className="grid grid-cols-7 text-center text-xs mb-2 text-white/80">
+          <div className="px-4 py-1 mt-0">
+            <div className="text-xs font-medium mb-1 text-white/90">April 2025</div>
+            <div className="grid grid-cols-7 text-center text-xs mb-1 text-white/80">
               <div>S</div>
               <div>M</div>
               <div>T</div>
@@ -145,7 +145,7 @@ export function Sidebar({ className }: SidebarProps) {
               <div>F</div>
               <div>S</div>
             </div>
-            <div className="grid grid-cols-7 gap-1 text-center text-xs">
+            <div className="grid grid-cols-7 gap-0.5 text-center text-xs">
               {Array.from({ length: 30 }, (_, i) => i + 1).map((day) => {
                 const isToday = day === 15 // Assuming today is the 15th as shown in images
                 return (
@@ -163,13 +163,12 @@ export function Sidebar({ className }: SidebarProps) {
             </div>
           </div>
 
-          <div className="px-4 py-3">
-            <div className="text-sm font-medium mb-2 text-white/90">Platforms</div>
+          <div className="px-4 py-0 mt-2">
             <div className="grid grid-cols-2 gap-2">
               {platforms.map((platform) => (
                 <div 
                   key={platform.name}
-                  className="flex items-center gap-2 p-2 rounded-md bg-white/10 hover:bg-white/20 text-xs font-medium transition-colors"
+                  className="flex items-center gap-2 p-2 rounded-md bg-white/10 hover:bg-white/20 text-xs font-medium transition-colors cursor-pointer"
                 >
                   <span className={`${platform.color} h-5 w-5 rounded flex items-center justify-center text-white text-xs`}>
                     {platform.icon}
@@ -178,13 +177,14 @@ export function Sidebar({ className }: SidebarProps) {
                 </div>
               ))}
             </div>
+
           </div>
           
           {/* Toggle Button */}
-          <div className="p-4 flex justify-center mt-auto">
+          <div className="p-4 flex justify-center mt-auto mb-8">
             <button 
               onClick={toggleSidebar}
-              className="h-8 w-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors"
+              className="h-8 w-8 rounded-full bg-transparent hover:bg-white/20 flex items-center justify-center transition-colors cursor-pointer"
             >
               <ChevronLeft className="h-4 w-4" />
             </button>
@@ -193,10 +193,10 @@ export function Sidebar({ className }: SidebarProps) {
       )}
 
       {collapsed && (
-        <div className="p-4 flex justify-center mt-auto">
+        <div className="p-4 flex justify-center mt-auto mb-4">
           <button 
             onClick={toggleSidebar}
-            className="h-8 w-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors"
+            className="h-8 w-8 rounded-full bg-transparent hover:bg-white/20 flex items-center justify-center transition-colors cursor-pointer"
           >
             <ChevronRight className="h-4 w-4" />
           </button>

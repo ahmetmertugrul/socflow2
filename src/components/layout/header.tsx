@@ -18,12 +18,12 @@ export function Header() {
   return (
     <header className="bg-[#ff4081] text-white sticky top-0 z-50">
       <div className="flex h-16 items-center justify-between px-4">
-        <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" className="text-white" onClick={toggleSidebar}>
-            <Menu className="h-6 w-6" />
+        <div className="flex items-center gap-6">
+          <Button variant="ghost" size="icon" className="text-white -ml-3" onClick={toggleSidebar}>
+            <Menu className="h-7 w-7" />
           </Button>
-          <Link href="/" className="flex items-center justify-center">
-            <span className="text-2xl font-bold text-center">SocFlow</span>
+          <Link href="/" className="flex items-center -ml-1">
+            <span className="text-2xl font-bold">SocFlow</span>
           </Link>
         </div>
         

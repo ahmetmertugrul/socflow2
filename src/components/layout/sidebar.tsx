@@ -54,33 +54,51 @@ export function Sidebar({ className }: SidebarProps) {
       collapsed ? 'w-16' : 'w-64',
       className
     )}>
-      {!collapsed && (
-        <div className="flex items-center h-16 px-6">
-          <Link href="/dashboard" className="flex items-center gap-2">
-            <span className="text-xl font-bold text-white">SocFlow</span>
-          </Link>
-        </div>
-      )}
+      {/* SocFlow yazu0131su0131 kaldu0131ru0131ldu0131 */}
 
       {!collapsed ? (
         <div className="px-6 py-4">
           <Link href="/content/create">
             <button className="w-full flex items-center justify-center gap-2 bg-white/20 hover:bg-white/30 text-white font-medium rounded-full py-3 px-4 transition-colors">
               <Plus className="h-5 w-5" />
-              Create Post
+              Yeni İçerik Oluştur
             </button>
           </Link>
         </div>
       ) : (
-        <div className="px-3 py-4">
+        <div className="flex flex-col items-center gap-6 mt-20">
           <Link href="/content/create">
-            <button className="w-full flex items-center justify-center bg-white/20 hover:bg-white/30 text-white font-medium rounded-full p-2 transition-colors">
+            <button className="w-10 h-10 flex items-center justify-center bg-white/20 hover:bg-white/30 text-white rounded-md transition-colors">
               <Plus className="h-5 w-5" />
+            </button>
+          </Link>
+          <Link href="/dashboard">
+            <button className="w-10 h-10 flex items-center justify-center bg-white/20 hover:bg-white/30 text-white rounded-md transition-colors">
+              <Home className="h-5 w-5" />
+            </button>
+          </Link>
+          <Link href="/calendar">
+            <button className="w-10 h-10 flex items-center justify-center bg-white/20 hover:bg-white/30 text-white rounded-md transition-colors">
+              <CalendarIcon className="h-5 w-5" />
+            </button>
+          </Link>
+          <Link href="/analytics">
+            <button className="w-10 h-10 flex items-center justify-center bg-white/20 hover:bg-white/30 text-white rounded-md transition-colors">
+              <BarChart2 className="h-5 w-5" />
+            </button>
+          </Link>
+          <Link href="/audience">
+            <button className="w-10 h-10 flex items-center justify-center bg-white/20 hover:bg-white/30 text-white rounded-md transition-colors">
+              <Users className="h-5 w-5" />
+            </button>
+          </Link>
+          <Link href="/content">
+            <button className="w-10 h-10 flex items-center justify-center bg-white/20 hover:bg-white/30 text-white rounded-md transition-colors">
+              <FileText className="h-5 w-5" />
             </button>
           </Link>
         </div>
       )}
-
       <nav className="flex-1 px-4 py-2 space-y-1">
         <Link href="/dashboard" className={cn(
           'flex items-center w-full px-4 py-2.5 text-white rounded-md hover:bg-white/10 transition-colors',

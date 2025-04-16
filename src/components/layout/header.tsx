@@ -16,10 +16,10 @@ export function Header() {
   };
 
   return (
-    <header className="bg-[#484a48] text-white sticky top-0 z-50 w-full">
+    <header className="bg-[#3c3d3a] text-white sticky top-0 z-50 w-full">
       <div className="flex h-16 items-center justify-between pl-0 pr-4">
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" className="text-white hover:bg-white/10 ml-0 rounded-none h-16 w-16" onClick={toggleSidebar}>
+          <Button variant="ghost" size="icon" className="text-white rounded-md hover:bg-white/10 cursor-pointer p-4 m-0 ml-3.5" onClick={toggleSidebar}>
             <Menu className="h-10 w-10" />
           </Button>
           <Link href="/" className="flex items-center">
@@ -39,11 +39,11 @@ export function Header() {
         </div>
         
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" className="text-white hover:bg-white/10 rounded-full">
+          <Button variant="ghost" size="icon" className="text-white hover:bg-white/10 rounded-full cursor-pointer">
             <Sun className="h-5 w-5" />
           </Button>
           
-          <Button variant="ghost" size="icon" className="text-white hover:bg-white/10 rounded-full relative">
+          <Button variant="ghost" size="icon" className="text-white hover:bg-white/10 rounded-full relative cursor-pointer">
             <Bell className="h-5 w-5" />
             <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-white"></span>
           </Button>
@@ -54,7 +54,7 @@ export function Header() {
               <p className="text-xs text-white/70">04:39 PM</p>
             </div>
             
-            <Button variant="ghost" size="icon" className="rounded-full bg-white/20 hover:bg-white/30 h-8 w-8">
+            <Button variant="ghost" size="icon" className="rounded-full bg-white/20 hover:bg-white/30 h-8 w-8 cursor-pointer">
               <span className="text-white font-medium text-sm">U</span>
             </Button>
           </div>

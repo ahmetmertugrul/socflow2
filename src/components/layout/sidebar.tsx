@@ -59,7 +59,7 @@ export function Sidebar({ className }: SidebarProps) {
       {!collapsed ? (
         <div className="px-6 py-4">
           <Link href="/content/create">
-            <button className="w-full flex items-center justify-center gap-2 bg-white/20 hover:bg-white/30 text-white font-medium rounded-full py-3 px-4 transition-colors">
+            <button className="w-full flex items-center justify-center gap-2 bg-white/20 hover:bg-white/30 text-white font-medium rounded-full py-3 px-4 transition-colors cursor-pointer">
               <Plus className="h-5 w-5" />
               Create Post
             </button>

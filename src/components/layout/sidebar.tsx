@@ -5,6 +5,7 @@ import { Calendar } from '@/components/ui/calendar'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
 import { Home, Calendar as CalendarIcon, BarChart2, Users, FileText, Plus, ChevronRight, ChevronLeft } from 'lucide-react'
+import { BlueskyIcon, FacebookIcon, InstagramIcon, LinkedinIcon, MediumIcon, PinterestIcon, TelegramIcon, ThreadsIcon, TiktokIcon, TumblrIcon, XIcon, YoutubeIcon } from '@/components/icons/SocialIcons'
 import { useEffect, useState } from 'react'
 
 interface SidebarProps {
@@ -13,23 +14,133 @@ interface SidebarProps {
 
 export function Sidebar({ className }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false)
+  const [currentMonth, setCurrentMonth] = useState(3) // Nisan ayı için 3 (0-indexed)
+  const [currentYear, setCurrentYear] = useState(2025)
+  const [activePlatforms, setActivePlatforms] = useState<string[]>([])
   const currentDate = new Date()
   
+  // Ay isimleri
+  const months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+    ]
+
+  // Seçili ayın gün sayısını hesapla
+  const getDaysInMonth = (year: number, month: number) => {
+    return new Date(year, month + 1, 0).getDate();
+  }
+
+  // Ayın ilk gününün haftanın hangi gününe denk geldiğini hesapla (0 = Pazar, 1 = Pazartesi, ...)
+  const getFirstDayOfMonth = (year: number, month: number) => {
+    return new Date(year, month, 1).getDay();
+  }
+
+  // Önceki aya git
+  const goToPreviousMonth = () => {
+    if (currentMonth === 0) {
+      setCurrentMonth(11);
+      setCurrentYear(currentYear - 1);
+    } else {
+      setCurrentMonth(currentMonth - 1);
+    }
+  }
+
+  // Sonraki aya git
+  const goToNextMonth = () => {
+    if (currentMonth === 11) {
+      setCurrentMonth(0);
+      setCurrentYear(currentYear + 1);
+    } else {
+      setCurrentMonth(currentMonth + 1);
+    }
+  }
+
   // Platform icons and names
   const platforms = [
-    { name: 'Bluesky', color: 'bg-blue-500', icon: 'S' },
-    { name: 'Facebook', color: 'bg-blue-600', icon: 'f' },
-    { name: 'Instagram', color: 'bg-pink-500', icon: 'IG' },
-    { name: 'LinkedIn', color: 'bg-blue-700', icon: 'in' },
-    { name: 'Medium', color: 'bg-green-700', icon: 'M' },
-    { name: 'Pinterest', color: 'bg-red-600', icon: 'P' },
-    { name: 'Telegram', color: 'bg-blue-400', icon: 'T' },
-    { name: 'Threads', color: 'bg-black', icon: 'TH' },
-    { name: 'TikTok', color: 'bg-black', icon: 'TT' },
-    { name: 'Tumblr', color: 'bg-blue-900', icon: 'T' },
-    { name: 'X', color: 'bg-blue-400', icon: 'X' },
-    { name: 'YouTube', color: 'bg-red-600', icon: 'YT' },
+    { 
+      name: 'Bluesky', 
+      activeColor: 'bg-[#1DA1F2]', 
+      inactiveColor: 'bg-[#4a5568]',
+      icon: <BlueskyIcon /> 
+    },
+    { 
+      name: 'Facebook', 
+      activeColor: 'bg-[#1877F2]', 
+      inactiveColor: 'bg-[#4a5568]',
+      icon: <FacebookIcon /> 
+    },
+    { 
+      name: 'Instagram', 
+      activeColor: 'bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#FCAF45]', 
+      inactiveColor: 'bg-[#4a5568]',
+      icon: <InstagramIcon /> 
+    },
+    { 
+      name: 'LinkedIn', 
+      activeColor: 'bg-[#0A66C2]', 
+      inactiveColor: 'bg-[#4a5568]',
+      icon: <LinkedinIcon /> 
+    },
+    { 
+      name: 'Medium', 
+      activeColor: 'bg-[#00ab6c]', 
+      inactiveColor: 'bg-[#4a5568]',
+      icon: <MediumIcon /> 
+    },
+    { 
+      name: 'Pinterest', 
+      activeColor: 'bg-[#E60023]', 
+      inactiveColor: 'bg-[#4a5568]',
+      icon: <PinterestIcon /> 
+    },
+    { 
+      name: 'Telegram', 
+      activeColor: 'bg-[#26A5E4]', 
+      inactiveColor: 'bg-[#4a5568]',
+      icon: <TelegramIcon /> 
+    },
+    { 
+      name: 'Threads', 
+      activeColor: 'bg-[#000000]', 
+      inactiveColor: 'bg-[#4a5568]',
+      icon: <ThreadsIcon /> 
+    },
+    { 
+      name: 'TikTok', 
+      activeColor: 'bg-[#000000]', 
+      inactiveColor: 'bg-[#4a5568]',
+      icon: <TiktokIcon /> 
+    },
+    { 
+      name: 'Tumblr', 
+      activeColor: 'bg-[#000000]', 
+      inactiveColor: 'bg-[#4a5568]',
+      icon: <TumblrIcon /> 
+    },
+    { 
+      name: 'X', 
+      activeColor: 'bg-[#000000]', 
+      inactiveColor: 'bg-[#4a5568]',
+      icon: <XIcon /> 
+    },
+    { 
+      name: 'YouTube', 
+      activeColor: 'bg-[#FF0000]', 
+      inactiveColor: 'bg-[#4a5568]',
+      icon: <YoutubeIcon /> 
+    },
   ]
+  
+  // Platform'un aktif olup olmadığını değiştir
+  const togglePlatform = (platformName: string) => {
+    setActivePlatforms(prev => {
+      if (prev.includes(platformName)) {
+        return prev.filter(name => name !== platformName);
+      } else {
+        return [...prev, platformName];
+      }
+    });
+  }
 
   // Header'dan gelen sidebar toggle event'ini dinle
   useEffect(() => {
@@ -135,8 +246,26 @@ export function Sidebar({ className }: SidebarProps) {
       {!collapsed && (
         <>
           <div className="px-4 py-1 mt-0 relative">
-            <div className="text-sm font-medium absolute top-1 left-5 text-white/90">April 2025</div>
-            <div className="grid grid-cols-7 text-center text-xs mb-1 text-white/80 mt-6">
+            <div className="flex items-center justify-between mb-1 mt-1">
+              <div className="text-sm font-medium text-white/90">
+                {months[currentMonth]} {currentYear}
+              </div>
+              <div className="flex items-center">
+                <button 
+                  onClick={goToPreviousMonth} 
+                  className="text-white/70 hover:text-white cursor-pointer p-1"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </button>
+                <button 
+                  onClick={goToNextMonth} 
+                  className="text-white/70 hover:text-white cursor-pointer p-1"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+            <div className="grid grid-cols-7 text-center text-xs mb-1 text-white/80 mt-2">
               <div>S</div>
               <div>M</div>
               <div>T</div>
@@ -146,8 +275,15 @@ export function Sidebar({ className }: SidebarProps) {
               <div>S</div>
             </div>
             <div className="grid grid-cols-7 gap-0.5 text-center text-xs">
-              {Array.from({ length: 30 }, (_, i) => i + 1).map((day) => {
-                const isToday = day === 15 // Assuming today is the 15th as shown in images
+              {/* Önceki ayın günleri için boş hücreler */}
+              {Array.from({ length: getFirstDayOfMonth(currentYear, currentMonth) }, (_, i) => (
+                <div key={`empty-${i}`} className="h-7 w-7"></div>
+              ))}
+              
+              {/* Güncel ayın günleri */}
+              {Array.from({ length: getDaysInMonth(currentYear, currentMonth) }, (_, i) => i + 1).map((day) => {
+                // Bugünün tarihini kontrol et (16 Nisan 2025 olarak varsayalım)
+                const isToday = day === 16 && currentMonth === 3 && currentYear === 2025
                 return (
                   <div 
                     key={day} 
@@ -165,23 +301,25 @@ export function Sidebar({ className }: SidebarProps) {
 
           <div className="px-4 py-0 mt-2">
             <div className="grid grid-cols-2 gap-2">
-              {platforms.map((platform) => (
-                <div 
-                  key={platform.name}
-                  className="flex items-center gap-2 p-2 rounded-md bg-white/10 hover:bg-white/20 text-xs font-medium transition-colors cursor-pointer"
-                >
-                  <span className={`${platform.color} h-5 w-5 rounded flex items-center justify-center text-white text-xs`}>
+              {platforms.map((platform) => {
+                const isActive = activePlatforms.includes(platform.name);
+                return (
+                  <div 
+                    key={platform.name}
+                    className={`${isActive ? platform.activeColor : platform.inactiveColor} flex items-center gap-2 py-2 px-3 rounded-md hover:opacity-90 text-xs font-medium transition-all duration-200 cursor-pointer shadow-sm`}
+                    onClick={() => togglePlatform(platform.name)}
+                  >
                     {platform.icon}
-                  </span>
-                  <span className="text-white/90">{platform.name}</span>
-                </div>
-              ))}
+                    <span className="text-white font-medium">{platform.name}</span>
+                  </div>
+                );
+              })}
             </div>
 
           </div>
-          
+      
           {/* Toggle Button */}
-          <div className="p-4 flex justify-center mt-auto mb-4">
+          <div className="p-4 flex justify-center -mt-3 -mb-2">
             <button 
               onClick={toggleSidebar}
               className="h-8 w-8 rounded-full bg-transparent hover:bg-white/20 flex items-center justify-center transition-colors cursor-pointer"

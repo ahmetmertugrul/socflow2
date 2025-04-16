@@ -245,59 +245,6 @@ export function Sidebar({ className }: SidebarProps) {
 
       {!collapsed && (
         <>
-          <div className="px-4 py-1 mt-0 relative">
-            <div className="flex items-center justify-between mb-1 mt-1">
-              <div className="text-sm font-medium text-white/90">
-                {months[currentMonth]} {currentYear}
-              </div>
-              <div className="flex items-center">
-                <button 
-                  onClick={goToPreviousMonth} 
-                  className="text-white/70 hover:text-white cursor-pointer p-1"
-                >
-                  <ChevronLeft className="h-4 w-4" />
-                </button>
-                <button 
-                  onClick={goToNextMonth} 
-                  className="text-white/70 hover:text-white cursor-pointer p-1"
-                >
-                  <ChevronRight className="h-4 w-4" />
-                </button>
-              </div>
-            </div>
-            <div className="grid grid-cols-7 text-center text-xs mb-1 text-white/80 mt-2">
-              <div>S</div>
-              <div>M</div>
-              <div>T</div>
-              <div>W</div>
-              <div>T</div>
-              <div>F</div>
-              <div>S</div>
-            </div>
-            <div className="grid grid-cols-7 gap-0.5 text-center text-xs">
-              {/* Önceki ayın günleri için boş hücreler */}
-              {Array.from({ length: getFirstDayOfMonth(currentYear, currentMonth) }, (_, i) => (
-                <div key={`empty-${i}`} className="h-7 w-7"></div>
-              ))}
-              
-              {/* Güncel ayın günleri */}
-              {Array.from({ length: getDaysInMonth(currentYear, currentMonth) }, (_, i) => i + 1).map((day) => {
-                // Bugünün tarihini kontrol et (16 Nisan 2025 olarak varsayalım)
-                const isToday = day === 16 && currentMonth === 3 && currentYear === 2025
-                return (
-                  <div 
-                    key={day} 
-                    className={cn(
-                      'h-7 w-7 rounded-full flex items-center justify-center cursor-pointer',
-                      isToday ? 'bg-white text-[#9c27b0] font-bold' : 'hover:bg-white/10 text-white/90'
-                    )}
-                  >
-                    {day}
-                  </div>
-                )
-              })}
-            </div>
-          </div>
 
           <div className="px-4 py-0 mt-2">
             <div className="grid grid-cols-2 gap-2">

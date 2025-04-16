@@ -134,9 +134,9 @@ export function Sidebar({ className }: SidebarProps) {
 
       {!collapsed && (
         <>
-          <div className="px-4 py-1 mt-0">
-            <div className="text-xs font-medium mb-1 text-white/90">April 2025</div>
-            <div className="grid grid-cols-7 text-center text-xs mb-1 text-white/80">
+          <div className="px-4 py-1 mt-0 relative">
+            <div className="text-sm font-medium absolute top-1 left-5 text-white/90">April 2025</div>
+            <div className="grid grid-cols-7 text-center text-xs mb-1 text-white/80 mt-6">
               <div>S</div>
               <div>M</div>
               <div>T</div>
@@ -152,7 +152,7 @@ export function Sidebar({ className }: SidebarProps) {
                   <div 
                     key={day} 
                     className={cn(
-                      'h-7 w-7 rounded-full flex items-center justify-center',
+                      'h-7 w-7 rounded-full flex items-center justify-center cursor-pointer',
                       isToday ? 'bg-white text-[#9c27b0] font-bold' : 'hover:bg-white/10 text-white/90'
                     )}
                   >

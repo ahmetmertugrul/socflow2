@@ -31,7 +31,7 @@ interface CalendarDay {
 export function ContentCalendar() {
   const { theme } = useTheme();
   const [currentDate, setCurrentDate] = useState(new Date());
-  const { scheduledContents, clearScheduledContents } = useCalendar();
+  const { scheduledContents, clearScheduledContents, removeScheduledContent } = useCalendar();
   
   // Tarih bilgileri
   const currentMonth = currentDate.getMonth();
@@ -190,7 +190,7 @@ export function ContentCalendar() {
             <div 
               key={index} 
               className={cn(
-                'border-t-4 border-r-4 p-2 h-[120px] overflow-hidden',
+                'border-t-4 border-r-4 p-2 h-[150px] overflow-hidden',
                 index % 7 === 0 && 'border-l-4', // İlk sütun için sol kenar
                 day.isCurrentMonth ? 'bg-card' : 'bg-muted/30',
                 day.isToday && 'bg-muted/50'
@@ -208,23 +208,32 @@ export function ContentCalendar() {
               </div>
               
               {/* Günün etkinlikleri */}
-              <div className="mt-1 space-y-1">
+              <div className="mt-2 space-y-1">
                 {day.events.slice(0, 3).map((event, eventIndex) => (
                   <div 
                     key={eventIndex} 
-                    className="text-xs p-1.5 rounded cursor-pointer hover:opacity-90 transition-opacity mb-1"
+                    className="text-sm p-5.5 rounded cursor-pointer hover:opacity-90 transition-opacity mb-1 relative"
                     style={{ 
                       backgroundColor: event.color,
                       color: 'white'
                     }}
                   >
-                    <div className="font-medium truncate text-[11px]">{event.title}</div>
-                    <div className="text-[10px] opacity-90">{event.startTime}</div>
-                    <div className="flex mt-0.5 gap-0.5 overflow-hidden">
+                    <button 
+                      className="absolute top-1 right-1 w-4 h-4 rounded-full bg-white/30 flex items-center justify-center hover:bg-white/50 transition-colors"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        removeScheduledContent(event.id);
+                      }}
+                    >
+                      <X className="w-3 h-3 text-white" />
+                    </button>
+                    <div className="font-medium truncate text-[14px] pr-5 -mt-4 -ml-3">{event.title}</div>
+                    <div className="text-[12px] opacity-90 -mt-0 -ml-3">{event.startTime}</div>
+                    <div className="flex mt-5 gap-1 pb-1 -ml-5" style={{ maxWidth: '100%' }}>
                       {event.platforms.map((platform, platformIndex) => (
                         <span 
                           key={platformIndex} 
-                          className="inline-flex items-center justify-center rounded-full w-5 h-5"
+                          className="inline-flex flex-shrink-0 items-center justify-center rounded-full w-3 h-3"
                         >
                           {platform.toLowerCase().includes('bluesky') && <BlueskyIcon />}
                           {platform.toLowerCase().includes('facebook') && <FacebookIcon />}

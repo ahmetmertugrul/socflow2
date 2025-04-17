@@ -35,7 +35,21 @@ interface CalendarProviderProps {
 }
 
 export function CalendarProvider({ children }: CalendarProviderProps) {
-  const [scheduledContents, setScheduledContents] = useState<ScheduledContent[]>([]);
+  const [scheduledContents, setScheduledContents] = useState<ScheduledContent[]>(() => {
+    // localStorage'dan verileri yükle (sayfa yenilendiinde silinmemesi için)
+    if (typeof window !== 'undefined') {
+      const savedContents = localStorage.getItem('scheduledContents');
+      return savedContents ? JSON.parse(savedContents) : [];
+    }
+    return [];
+  });
+
+  // scheduledContents deitiğinde localStorage'a kaydet
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('scheduledContents', JSON.stringify(scheduledContents));
+    }
+  }, [scheduledContents]);
 
   const addScheduledContent = (content: ScheduledContent) => {
     setScheduledContents((prev) => [...prev, content]);
@@ -48,6 +62,10 @@ export function CalendarProvider({ children }: CalendarProviderProps) {
   const clearScheduledContents = () => {
     // Takvim verilerini temizle
     setScheduledContents([]);
+    // localStorage'dan da temizle
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('scheduledContents');
+    }
   };
 
   return (

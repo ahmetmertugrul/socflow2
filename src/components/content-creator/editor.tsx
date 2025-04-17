@@ -64,6 +64,7 @@ const platforms = [
 ];
 
 export function ContentEditor() {
+  const { addScheduledContent } = useCalendar();
   const [activeTab, setActiveTab] = useState('create');
   const [content, setContent] = useState('');
   const [title, setTitle] = useState('');
@@ -167,8 +168,6 @@ export function ContentEditor() {
   };
   
   // Get calendar context
-  const { addScheduledContent } = useCalendar();
-
   // Publish content immediately
   const handlePublish = () => {
     // Publishing logic will be implemented here

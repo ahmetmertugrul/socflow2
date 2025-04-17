@@ -6,7 +6,7 @@ import { ChevronLeft, ChevronRight, Plus, X } from 'lucide-react';
 import { useTheme } from '@/providers/theme-context';
 import { cn } from '@/lib/utils';
 import { useCalendar } from '@/context/calendar-context';
-import { BlueskyIcon, FacebookIcon, InstagramIcon, LinkedinIcon, MediumIcon, PinterestIcon, TelegramIcon, ThreadsIcon, TiktokIcon, TumblrIcon, XIcon, YoutubeIcon } from '@/components/icons/ColoredSocialIcons';
+import { BlueskyIcon, FacebookIcon, InstagramIcon, LinkedinIcon, MediumIcon, PinterestIcon, TelegramIcon, ThreadsIcon, TiktokIcon, TumblrIcon, XIcon, YoutubeIcon } from '@/components/icons/SocialIcons';
 
 interface ScheduledEvent {
   id: string;
@@ -205,6 +205,11 @@ export function ContentCalendar() {
                 >
                   {day.date}
                 </span>
+                {day.events.length > 0 && (
+                  <span className="text-xs text-muted-foreground font-medium">
+                    {day.events.length} {day.events.length === 1 ? 'post' : 'posts'}
+                  </span>
+                )}
               </div>
               
               {/* Günün etkinlikleri */}
@@ -220,24 +225,26 @@ export function ContentCalendar() {
                   >
                     <div className="font-medium truncate text-[11px]">{event.title}</div>
                     <div className="text-[10px] opacity-90">{event.startTime}</div>
-                    <div className="flex mt-0.5 gap-0.5 overflow-hidden">
+                    <div className="flex mt-0.5 gap-0.5 flex-wrap">
                       {event.platforms.map((platform, platformIndex) => (
                         <span 
                           key={platformIndex} 
-                          className="inline-flex items-center justify-center rounded-full w-5 h-5"
+                          className="inline-flex items-center justify-center rounded-full w-4 h-4 bg-white/20"
                         >
-                          {platform.toLowerCase().includes('bluesky') && <BlueskyIcon />}
-                          {platform.toLowerCase().includes('facebook') && <FacebookIcon />}
-                          {platform.toLowerCase().includes('instagram') && <InstagramIcon />}
-                          {platform.toLowerCase().includes('linkedin') && <LinkedinIcon />}
-                          {platform.toLowerCase().includes('medium') && <MediumIcon />}
-                          {platform.toLowerCase().includes('pinterest') && <PinterestIcon />}
-                          {platform.toLowerCase().includes('telegram') && <TelegramIcon />}
-                          {platform.toLowerCase().includes('threads') && <ThreadsIcon />}
-                          {platform.toLowerCase().includes('tiktok') && <TiktokIcon />}
-                          {platform.toLowerCase().includes('tumblr') && <TumblrIcon />}
-                          {(platform.toLowerCase().includes('x') || platform.toLowerCase().includes('twitter')) && <XIcon />}
-                          {platform.toLowerCase().includes('youtube') && <YoutubeIcon />}
+                          <div className="w-2.5 h-2.5 text-white">
+                            {platform.toLowerCase().includes('bluesky') && <BlueskyIcon />}
+                            {platform.toLowerCase().includes('facebook') && <FacebookIcon />}
+                            {platform.toLowerCase().includes('instagram') && <InstagramIcon />}
+                            {platform.toLowerCase().includes('linkedin') && <LinkedinIcon />}
+                            {platform.toLowerCase().includes('medium') && <MediumIcon />}
+                            {platform.toLowerCase().includes('pinterest') && <PinterestIcon />}
+                            {platform.toLowerCase().includes('telegram') && <TelegramIcon />}
+                            {platform.toLowerCase().includes('threads') && <ThreadsIcon />}
+                            {platform.toLowerCase().includes('tiktok') && <TiktokIcon />}
+                            {platform.toLowerCase().includes('tumblr') && <TumblrIcon />}
+                            {(platform.toLowerCase().includes('x') || platform.toLowerCase().includes('twitter')) && <XIcon />}
+                            {platform.toLowerCase().includes('youtube') && <YoutubeIcon />}
+                          </div>
                         </span>
                       ))}
                     </div>

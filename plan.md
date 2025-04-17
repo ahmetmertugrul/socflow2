@@ -71,13 +71,6 @@
 
 ## 5. Ana Özelliklerin Geliştirilmesi
 ### 5.1. İçerik Oluşturma Modülü
-- [ ] Zengin metin editörü entegrasyonu (TipTap veya Lexical)
-- [ ] Medya yükleme bileşenleri:
-  - [ ] Resim yükleme ve önizleme
-  - [ ] Video yükleme ve önizleme
-  - [ ] Ses yükleme ve önizleme
-  - [ ] Dosya yükleme
-- [ ] URL önizleme özelliği
 - [ ] Etiket sistemi
 - [ ] Taslak kaydetme özelliği
 - [ ] İçerik arşivleme ve silme

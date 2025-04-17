@@ -46,6 +46,7 @@ export function CalendarProvider({ children }: CalendarProviderProps) {
   };
 
   const clearScheduledContents = () => {
+    // Takvim verilerini temizle
     setScheduledContents([]);
   };
 

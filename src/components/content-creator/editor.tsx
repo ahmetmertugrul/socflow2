@@ -53,13 +53,13 @@ const platforms = [
   { id: 'facebook', name: 'Facebook', icon: FacebookIcon, color: 'bg-blue-600', enabled: true },
   { id: 'instagram', name: 'Instagram', icon: InstagramIcon, color: 'bg-pink-600', enabled: true },
   { id: 'linkedin', name: 'LinkedIn', icon: LinkedinIcon, color: 'bg-blue-700', enabled: true },
-  { id: 'medium', name: 'Medium', icon: MediumIcon, color: 'bg-green-700', enabled: true },
+  { id: 'medium', name: 'Medium', icon: MediumIcon, color: 'bg-black', enabled: true },
   { id: 'pinterest', name: 'Pinterest', icon: PinterestIcon, color: 'bg-red-600', enabled: true },
   { id: 'telegram', name: 'Telegram', icon: TelegramIcon, color: 'bg-blue-500', enabled: true },
   { id: 'threads', name: 'Threads', icon: ThreadsIcon, color: 'bg-black', enabled: true },
   { id: 'tiktok', name: 'TikTok', icon: TiktokIcon, color: 'bg-black', enabled: true },
   { id: 'tumblr', name: 'Tumblr', icon: TumblrIcon, color: 'bg-indigo-900', enabled: true },
-  { id: 'twitter', name: 'Twitter', icon: XIcon, color: 'bg-black', enabled: true },
+  { id: 'twitter', name: 'X', icon: XIcon, color: 'bg-black', enabled: true },
   { id: 'youtube', name: 'YouTube', icon: YoutubeIcon, color: 'bg-red-600', enabled: true },
 ];
 
@@ -69,7 +69,7 @@ export function ContentEditor() {
   const [title, setTitle] = useState('');
   const [tags, setTags] = useState<string[]>([]);
   const [currentTag, setCurrentTag] = useState('');
-  const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>(['twitter', 'facebook', 'instagram', 'linkedin']);
+  const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>([]);
   const [mediaFiles, setMediaFiles] = useState<File[]>([]);
   const [mediaPreviewUrls, setMediaPreviewUrls] = useState<string[]>([]);
   const [scheduledDate, setScheduledDate] = useState('');
@@ -127,7 +127,17 @@ export function ContentEditor() {
   // Toggle platform selection
   const togglePlatform = (platformId: string) => {
     if (platformId === 'all') {
-      setSelectedPlatforms(platforms.filter(p => p.id !== 'all' && p.enabled).map(p => p.id));
+      // Eu011fer tu00fcm platformlar zaten seu00e7iliyse, hepsini kapat
+      const allPlatformIds = platforms.filter(p => p.id !== 'all' && p.enabled).map(p => p.id);
+      const allSelected = allPlatformIds.every(id => selectedPlatforms.includes(id));
+      
+      if (allSelected) {
+        // Tu00fcm platformlaru0131n seu00e7imini kalu0131du0131r
+        setSelectedPlatforms([]);
+      } else {
+        // Tu00fcm platformlaru0131 seu00e7
+        setSelectedPlatforms(allPlatformIds);
+      }
     } else {
       setSelectedPlatforms(prev => prev.includes(platformId) ? prev.filter(id => id !== platformId) : [...prev, platformId]);
     }
@@ -439,29 +449,29 @@ export function ContentEditor() {
                   <Label>Platforms</Label>
                   <div className="border rounded-md p-4">
                     <ScrollArea className="h-auto">
-                      <div className="flex flex-wrap gap-4">
+                      <div className="grid gap-1" style={{ gridTemplateColumns: 'repeat(13, 1fr)' }}>
                         {platforms.map(platform => {
                           const isSelected = selectedPlatforms.includes(platform.id);
                           return (
                             <div 
                               key={platform.id} 
                               className={cn(
-                                "flex flex-col items-center justify-center gap-1 p-2 rounded-md cursor-pointer transition-colors",
+                                "flex-shrink-0 flex flex-col items-center justify-center gap-1 p-1 rounded-md cursor-pointer transition-colors w-full h-20",
                                 isSelected ? "bg-primary/10 border border-primary/30" : "hover:bg-muted",
                                 !platform.enabled && "opacity-50 cursor-not-allowed"
                               )}
                               onClick={() => platform.enabled && togglePlatform(platform.id)}
                             >
-                              <div className={cn("p-2 rounded-full", platform.color)}>
+                              <div className={cn("p-1 rounded-full flex items-center justify-center", platform.color)} style={{width: '36px', height: '36px'}}>
                                 {platform.id === 'all' ? (
                                   <AllIcon />
                                 ) : (
-                                  <div className="h-5 w-5 text-white">
+                                  <div className="h-5 w-5 text-white flex items-center justify-center">
                                     {React.createElement(platform.icon)}
                                   </div>
                                 )}
                               </div>
-                              <span className="text-xs font-medium text-center">{platform.name}</span>
+                              <span className="text-xs font-medium text-center w-full">{platform.name}</span>
                             </div>
                           );
                         })}

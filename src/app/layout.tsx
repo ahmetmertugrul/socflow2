@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from '@/components/auth/auth-provider';
 import { ThemeProvider } from '@/providers/theme-context';
 import { CalendarProvider } from '@/context/calendar-context';
+import { PlatformAuthProvider } from '@/context/auth-context';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,10 +35,12 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <AuthProvider>
-            <CalendarProvider>
-              {children}
-              <Toaster />
-            </CalendarProvider>
+            <PlatformAuthProvider>
+              <CalendarProvider>
+                {children}
+                <Toaster />
+              </CalendarProvider>
+            </PlatformAuthProvider>
           </AuthProvider>
         </ThemeProvider>
       </body>

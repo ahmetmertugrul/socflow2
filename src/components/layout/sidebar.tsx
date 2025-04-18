@@ -4,9 +4,11 @@ import Link from 'next/link'
 import { Calendar } from '@/components/ui/calendar'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
-import { Home, Calendar as CalendarIcon, BarChart2, Users, FileText, Plus, ChevronRight, ChevronLeft } from 'lucide-react'
+import { Home, Calendar as CalendarIcon, BarChart2, Users, FileText, Plus, ChevronRight, ChevronLeft, LogOut, X } from 'lucide-react'
 import { BlueskyIcon, FacebookIcon, InstagramIcon, LinkedinIcon, MediumIcon, PinterestIcon, TelegramIcon, ThreadsIcon, TiktokIcon, TumblrIcon, XIcon, YoutubeIcon } from '@/components/icons/SocialIcons'
 import { useEffect, useState } from 'react'
+import { usePlatformAuth } from '@/context/auth-context'
+import { socialPlatforms } from '@/config/social-platforms'
 
 interface SidebarProps {
   className?: string
@@ -18,6 +20,9 @@ export function Sidebar({ className }: SidebarProps) {
   const [currentYear, setCurrentYear] = useState(2025)
   const [activePlatforms, setActivePlatforms] = useState<string[]>([])
   const currentDate = new Date()
+  
+  // Platform Auth context'ten kimlik doğrulama fonksiyonlarını al
+  const { authenticatePlatform, disconnectPlatform, isAuthenticated } = usePlatformAuth()
   
   // Ay isimleri
   const months = [
@@ -131,15 +136,24 @@ export function Sidebar({ className }: SidebarProps) {
     },
   ]
   
-  // Platform'un aktif olup olmadığını değiştir
+  // Platform'un kimlik doğrulama işlemini başlat veya sonlandır
   const togglePlatform = (platformName: string) => {
-    setActivePlatforms(prev => {
-      if (prev.includes(platformName)) {
-        return prev.filter(name => name !== platformName);
-      } else {
-        return [...prev, platformName];
-      }
-    });
+    const platform = socialPlatforms.find(p => p.name === platformName)?.id;
+    if (!platform) return;
+    
+    if (isAuthenticated(platform)) {
+      // Eğer platform zaten kimlik doğrulaması yapılmışsa, bağlantıyı kes
+      disconnectPlatform(platform);
+      
+      // Aktif platformlar listesinden çıkar
+      setActivePlatforms(prev => prev.filter(name => name !== platformName));
+    } else {
+      // Eğer platform kimlik doğrulaması yapılmamışsa, kimlik doğrulama işlemini başlat
+      authenticatePlatform(platform);
+      
+      // Aktif platformlar listesine ekle
+      setActivePlatforms(prev => [...prev, platformName]);
+    }
   }
 
   // Header'dan gelen sidebar toggle event'ini dinle
@@ -249,15 +263,37 @@ export function Sidebar({ className }: SidebarProps) {
           <div className="px-4 py-0 mt-2">
             <div className="grid grid-cols-2 gap-2">
               {platforms.map((platform) => {
-                const isActive = activePlatforms.includes(platform.name);
+                // Kimlik doğrulama durumunu kontrol et
+                const platformId = socialPlatforms.find(p => p.name === platform.name)?.id;
+                const isAuthenticated = platformId ? usePlatformAuth().isAuthenticated(platformId) : false;
+                const isActive = isAuthenticated || activePlatforms.includes(platform.name);
+                
                 return (
                   <div 
                     key={platform.name}
-                    className={`${isActive ? platform.activeColor : platform.inactiveColor} flex items-center gap-2 py-2 px-3 rounded-md hover:opacity-90 text-xs font-medium transition-all duration-200 cursor-pointer shadow-sm`}
+                    className={`${isActive ? platform.activeColor : platform.inactiveColor} flex items-center gap-2 py-2 px-3 rounded-md hover:opacity-90 text-xs font-medium transition-all duration-200 cursor-pointer shadow-sm relative`}
                     onClick={() => togglePlatform(platform.name)}
                   >
                     {platform.icon}
                     <span className="text-white font-medium">{platform.name}</span>
+                    
+                    {/* Çıkış yapma butonu (kimlik doğrulaması yapılmışsa göster) */}
+                    {isAuthenticated && (
+                      <div 
+                        className="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full bg-white/90 shadow-sm flex items-center justify-center hover:bg-white cursor-pointer ring-1 ring-gray-200"
+                        title="Disconnect"
+                        aria-label={`Disconnect from ${platform.name}`}
+                        onClick={(e) => {
+                          e.stopPropagation(); // Tıklama olayının yukarıya yayılmasını engelle
+                          if (platformId) {
+                            disconnectPlatform(platformId);
+                            setActivePlatforms(prev => prev.filter(name => name !== platform.name));
+                          }
+                        }}
+                      >
+                        <X className="w-1.5 h-1.5 text-gray-600" strokeWidth={2.5} />
+                      </div>
+                    )}
                   </div>
                 );
               })}

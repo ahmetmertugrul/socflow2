@@ -1,0 +1,16 @@
+[build]
+  base = ""
+  publish = ".next"
+  command = "npm run build"
+
+[build.environment]
+  NEXT_PUBLIC_BASE_PATH = ""
+
+[dev]
+  command = "npm run dev"
+  port = 3000
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
